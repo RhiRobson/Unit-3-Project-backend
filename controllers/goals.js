@@ -122,4 +122,32 @@ router.delete("/:goalId/comments/:commentId", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/:goalId/information", verifyToken, async (req, res) => {
+  try {
+    req.body.author = req.user._id;
+    const goal = await Goal.findById(req.params.goalId);
+    goal.information.push(req.body);
+    await goal.save();
+
+    const newInformation = goal.information[goal.information.length - 1];
+    newInformation._doc.author = req.user;
+    res.status(201).json(newInformation);
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+});
+
+router.delete("/:goalId/information/:informationId", verifyToken, async (req, res) => {
+  try {
+    const goal = await Goal.findById(req.params.goalId);
+    const information = goal.information.id(req.params.informationId);
+
+    goal.information.remove({ _id: req.params.informationId });
+    await goal.save();
+    res.status(200).json({ message: "Update deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+});
+
 module.exports = router;
