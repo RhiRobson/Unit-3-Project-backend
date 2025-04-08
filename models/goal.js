@@ -31,10 +31,15 @@ const goalSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
+      startingDetails: {
+        type: String,
+        required: true,
+      },
       picture: {
         type: String,
         required: false,
       },
+      
       information: [informationSchema],
       author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       comments: [commentSchema],
