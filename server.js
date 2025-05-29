@@ -10,6 +10,7 @@ const testJwtRouter = require('./controllers/test-jwt');
 const authRouter = require('./controllers/auth');
 const userRouter = require('./controllers/users');
 const goalsRouter = require("./controllers/goals");
+const cors = require('cors');
 
 mongoose.connect(process.env.MONGODB_URI);
 

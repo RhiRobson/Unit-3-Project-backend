@@ -142,11 +142,11 @@ router.delete("/:goalId/information/:informationId", verifyToken, async (req, re
     const goal = await Goal.findById(req.params.goalId);
     const information = goal.information.id(req.params.informationId);
 
-   /* if (information.author.toString() !== req.user._id) {
+    if (information.author.toString() !== req.user._id) {
       return res
         .status(403)
         .json({ message: "You are not authorized to edit this update" });
-    } */
+    }
 
     goal.information.remove({ _id: req.params.informationId });
     await goal.save();
